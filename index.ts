@@ -1,10 +1,13 @@
 import express, { Express } from 'express';
 import config from './config';
 import sequelize from './models';
+import UserTable from './models/users table/user';
+
 
 const app: Express = express();
 
 app.use(express.json());
+
 
 (async function bootstrap() {
   try {
