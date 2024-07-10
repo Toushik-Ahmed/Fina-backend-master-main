@@ -2,8 +2,8 @@ import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '..';
 import { User } from '../../interfaces/user.interface';
 
-interface UserAttributes extends Optional<User, 'id'> {}
-interface UserInstance extends Model<User, UserAttributes>, User {
+export interface UserAttributes extends Optional<User, 'id'> {}
+export interface UserInstance extends Model<User, UserAttributes>, User {
   createdAt?: Date;
   updatedAt?: Date;
 }

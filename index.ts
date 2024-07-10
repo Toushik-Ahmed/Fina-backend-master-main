@@ -1,6 +1,6 @@
 import express, { Express } from 'express';
 import config from './config';
-import sequelize from './models/users table/user';
+import sequelize from './models/';
 import router from './routers/createuser';
 
 const SECRET = process.env.SECRET;

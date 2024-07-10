@@ -44,6 +44,11 @@ export async function login(req: Request, res: Response) {
     const user = await UserTable.findOne({ where: { email } });
     const validatePass = await bcrypt.compare(password, user?.password);
     if (!validatePass) throw new Error();
-    const accessToken=jwt.sign
-  } catch (error) {}
+    const accessToken = jwt.sign({ id: user?.id }, SECRET);
+    res.status(200).send({ accessToken });
+  } catch (error) {
+    res
+      .status(401)
+      .send({ error: '401', message: 'Username or password is incorrect' });
+  }
 }
