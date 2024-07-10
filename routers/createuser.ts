@@ -4,6 +4,7 @@ import { createUser } from '../controllers/usercreate';
 
 const router = Router();
 
-router.post('/login', createUser);
+router.post('/signup', createUser);
+
 router.get('/login', getAlluser);
 export default router;

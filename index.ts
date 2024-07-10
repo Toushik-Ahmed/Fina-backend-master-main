@@ -3,6 +3,8 @@ import config from './config';
 import sequelize from './models/users table/user';
 import router from './routers/createuser';
 
+const SECRET = process.env.SECRET;
+
 const app: Express = express();
 
 app.use(express.json());
