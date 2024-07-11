@@ -2,10 +2,12 @@ import express, { Express } from 'express';
 import config from './config';
 import sequelize from './models/';
 import router from './routers/createuser';
+const cors = require('cors');
 
 const SECRET = process.env.SECRET;
 
 const app: Express = express();
+app.use(cors());
 
 app.use(express.json());
 

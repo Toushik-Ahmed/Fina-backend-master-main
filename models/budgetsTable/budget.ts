@@ -1,14 +1,16 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../index';
-import { User } from '../../interfaces/user.interface';
+import { Budgets } from '../../interfaces/budgets';
 
-export interface UserAttributes extends Optional<User, 'id'> {}
-export interface UserInstance extends Model<User, UserAttributes>, User {
+export interface BudgetsAttributes extends Optional<Budgets, 'id'> {}
+export interface BudgetsInstance
+  extends Model<Budgets, BudgetsAttributes>,
+    Budgets {
   createdAt?: Date;
   updatedAt?: Date;
 }
 
-const UserTable = sequelize.define<UserInstance>('user', {
+const Budgetstable = sequelize.define('user', {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -16,17 +18,14 @@ const UserTable = sequelize.define<UserInstance>('user', {
     type: DataTypes.INTEGER,
     unique: true,
   },
-  username: {
+  category: {
     allowNull: false,
     type: DataTypes.STRING,
   },
-  email: {
-    allowNull: false,
-    type: DataTypes.STRING,
-  },
-  password: {
+  budget: {
     allowNull: false,
     type: DataTypes.STRING,
   },
 });
-export default UserTable;
+
+export default Budgetstable;
