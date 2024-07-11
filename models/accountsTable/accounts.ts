@@ -32,12 +32,12 @@ export const AccountsTable = sequelize.define<UserInstance>('accounts', {
   finacardno: {
     allowNull: false,
     autoIncrement: true,
-    type: DataTypes.NUMBER,
+    type: DataTypes.FLOAT,
   },
 
   manuallyaddedmoney: {
     allowNull: false,
-    type: DataTypes.NUMBER,
+    type: DataTypes.FLOAT,
   },
 
   totalmoney: {

@@ -30,7 +30,7 @@ const Transactionstable = sequelize.define<TransactionsInstance>(
     },
     amount: {
       allowNull: false,
-      type: DataTypes.NUMBER,
+      type: DataTypes.FLOAT,
     },
   }
 );

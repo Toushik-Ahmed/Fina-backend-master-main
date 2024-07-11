@@ -19,12 +19,13 @@ const CategoriesTable=sequelize.define<CategoriesInstance>('categories',{
   },
   expenses:{
     allowNull:false,
-    type:DataTypes.NUMBER
+    type:DataTypes.FLOAT
   },
   transactionsId:{
     allowNull:false,
     type:DataTypes.STRING
   }
 })
+
 
 export default CategoriesTable

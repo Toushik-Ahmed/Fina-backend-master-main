@@ -29,4 +29,5 @@ const UserTable = sequelize.define<UserInstance>('user', {
     type: DataTypes.STRING,
   },
 });
+
 export default UserTable;

@@ -2,6 +2,7 @@ import express, { Express } from 'express';
 import config from './config';
 import sequelize from './models/';
 import router from './routers/createuser';
+import CategoriesTable from './models/categoriesTable/categories';
 const cors = require('cors');
 
 const SECRET = process.env.SECRET;
@@ -15,6 +16,7 @@ app.use(router);
 (async function bootstrap() {
   try {
     await sequelize.sync();
+    await CategoriesTable.sync()
     app.listen(config.PORT, () => {
       console.log(`[server]: Server is running on port ${config.PORT}`);
     });
