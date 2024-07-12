@@ -1,8 +1,8 @@
+import { compare, hash } from 'bcrypt';
 import { Request, Response } from 'express';
+import { sign } from 'jsonwebtoken';
 import UserTable from '../models/users table/user';
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const SECRET = process.env.SECRET;
+const SECRET: string = process.env.SECRET || '';
 
 export async function createUser(req: Request, res: Response) {
   const { username, email, password } = req.body;
@@ -17,17 +17,17 @@ export async function createUser(req: Request, res: Response) {
     }
 
     // Hash the password
-    const hash = await bcrypt.hash(password, 10);
+    const passwordHash = await hash(password, 10);
 
     // Create a new user instance
     const newUser = await UserTable.create({
       username,
       email,
-      password: hash,
+      password: passwordHash,
     });
 
     // Generate JWT token
-    const accessToken = jwt.sign({ id: newUser.id }, SECRET);
+    const accessToken = sign({ id: newUser.id }, SECRET);
 
     // Respond with success and token
     res.status(201).json({ accessToken });
@@ -42,9 +42,12 @@ export async function login(req: Request, res: Response) {
   const { email, password } = req.body;
   try {
     const user = await UserTable.findOne({ where: { email } });
-    const validatePass = await bcrypt.compare(password, user?.password);
+    if (!user) {
+      throw new Error();
+    }
+    const validatePass = await compare(password, user.password);
     if (!validatePass) throw new Error();
-    const accessToken = jwt.sign({ id: user?.id }, SECRET);
+    const accessToken = sign({ id: user.id }, SECRET);
     res.status(200).send({ accessToken });
   } catch (error) {
     res
