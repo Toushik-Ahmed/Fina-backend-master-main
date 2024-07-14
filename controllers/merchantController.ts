@@ -1,6 +1,10 @@
 import { Request, Response } from 'express';
 import { Merchant } from '../interfaces/merchant';
-import { create, getAllMerchants } from '../models/merchantsTable/merchantsquery';
+import {
+  create,
+  deleteMerchantById,
+  getAllMerchants,
+} from '../models/merchantsTable/merchantsquery';
 
 export const addmerchant = async (req: Request, res: Response) => {
   try {
@@ -19,5 +23,16 @@ export const getallmerchants = async (req: Request, res: Response) => {
     res.send(result);
   } catch (error) {
     console.log('error occured');
+  }
+};
+
+export const deleteMerchant = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const userId = Number(id);
+    const deletemerchant = await deleteMerchantById(userId);
+    res.status(201).json(deletemerchant);
+  } catch (error) {
+    throw new Error('error');
   }
 };

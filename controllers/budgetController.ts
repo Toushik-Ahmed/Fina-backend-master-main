@@ -41,7 +41,7 @@ export const deletebudget = async (req: Request, res: Response) => {
   }
 };
 
-const updatebudget = async (req: Request, res: Response) => {
+export const updatebudget = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
     const userId = Number(id);

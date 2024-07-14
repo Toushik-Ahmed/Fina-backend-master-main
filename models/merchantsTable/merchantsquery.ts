@@ -19,7 +19,7 @@ export const getAllMerchants = async () => {
   }
 };
 
-export const deleteMerchant = async (id: number) => {
+export const deleteMerchantById = async (id: number) => {
   try {
     await MerchantTable.destroy({
       where: {
