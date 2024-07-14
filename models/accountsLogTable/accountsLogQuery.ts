@@ -10,11 +10,11 @@ export async function accountLog(data: AccountLog) {
   }
 }
 
-export async function getAccountLogById(data: AccountLog) {
+export async function getAccountLogById(data:number) {
   try {
     const accountLog = await AccountLogTable.findOne({
       where: {
-        id: data.id,
+        accountId: data,
       },
     });
     return accountLog;

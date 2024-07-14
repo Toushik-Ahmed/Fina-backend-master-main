@@ -19,6 +19,10 @@ export const AccountLogTable = sequelize.define<AccounLogInstance>(
       type: DataTypes.INTEGER,
       unique: true,
     },
+    accountId:{
+      allowNull:false,
+      type:DataTypes.INTEGER
+    },
     amount: {
       allowNull: false,
       type: DataTypes.FLOAT,

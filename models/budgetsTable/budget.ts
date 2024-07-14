@@ -18,7 +18,7 @@ const Budgetstable = sequelize.define('user', {
     type: DataTypes.INTEGER,
     unique: true,
   },
-  userID: {
+  userId: {
     allowNull: false,
     type: DataTypes.INTEGER,
   },

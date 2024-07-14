@@ -9,3 +9,24 @@ export const create = async (data: Merchant) => {
     throw new Error('error');
   }
 };
+
+export const getAllMerchants = async () => {
+  try {
+    const getallmerchants = MerchantTable.findAll();
+    return getallmerchants;
+  } catch (error) {
+    throw new Error('error');
+  }
+};
+
+export const deleteMerchant = async (id: number) => {
+  try {
+    await MerchantTable.destroy({
+      where: {
+        userId: id,
+      },
+    });
+  } catch (error) {
+    throw new Error('error');
+  }
+};

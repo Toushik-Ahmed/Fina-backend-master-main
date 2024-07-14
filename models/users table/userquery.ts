@@ -14,4 +14,4 @@ const create = async (person: User) => {
     console.log(error);
   }
 };
- export default create
+ export default create  

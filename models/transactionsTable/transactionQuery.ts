@@ -1,19 +1,11 @@
-// import { Transactions } from '../../interfaces/transactions';
-// import Transactionstable from './transactions';
+import { Transactions } from '../../interfaces/transactions';
+import Transactionstable from './transactions';
 
-// const create = async (trans: Transactions) => {
-//   try {
-//     const transaction = await Transactionstable.create({
-//       id: trans.id,
-//       userId: trans.userId,
-//       type: trans.type,
-//       amount: trans.amount,
-//       category: trans.category,
-//       timestamp: trans.timestamp,
-//     });
-//   } catch (error) {
-//     res.status(500).send({
-//       message: (error as Error).message,
-//     });
-//   }
-// };
+export const createTransaction = async (data: Transactions) => {
+  try {
+    const transaction = await Transactionstable.create(data);
+    return transaction;
+  } catch (error) {
+    throw new Error('error');
+  }
+};
