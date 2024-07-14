@@ -19,9 +19,9 @@ export const authMiddleware = async (
     // verify & decode token payload,
     const verifiedToken = verify(token, SECRET);
     if (typeof verifiedToken !== 'string') {
-      const user = await UserTable.findOne({ where: { id: verifiedToken.id } });
+      const user = await UserTable.findByPk(verifiedToken.id);
       if (!user) return res.sendStatus(401);
-      req.user = user;
+      req.user = user.get({ plain: true });
     } else {
       throw new Error();
     }

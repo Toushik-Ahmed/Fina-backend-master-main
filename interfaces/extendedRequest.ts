@@ -1,6 +1,6 @@
 import { Request } from 'express';
-import { UserInstance } from '../models/users table/user';
+import { User } from './user.interface';
 
 export interface ExtendedRequest extends Request {
-  user?: UserInstance;
+  user?: User;
 }
