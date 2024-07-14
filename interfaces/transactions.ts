@@ -1,6 +1,8 @@
 export interface Transactions {
   id: number;
-  categories: string;
-  merchants: string;
+  userId:number;
+  type: string;
   amount: number;
+  category: string;
+  timestamp: Date;
 }

@@ -1,6 +1,6 @@
 import { DataTypes, Model, Optional } from 'sequelize';
-import sequelize from '../index';
 import { Budgets } from '../../interfaces/budgets';
+import sequelize from '../index';
 
 export interface BudgetsAttributes extends Optional<Budgets, 'id'> {}
 export interface BudgetsInstance
@@ -17,6 +17,10 @@ const Budgetstable = sequelize.define('user', {
     primaryKey: true,
     type: DataTypes.INTEGER,
     unique: true,
+  },
+  userId: {
+    allowNull: false,
+    type: DataTypes.INTEGER,
   },
   category: {
     allowNull: false,
