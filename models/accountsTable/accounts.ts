@@ -1,6 +1,7 @@
 import { DataTypes, Model, Optional } from 'sequelize';
-import sequelize from '../index';
 import { Accounts } from '../../interfaces/accounts';
+import { AccountLogTable } from '../accountsLogTable/accountsLog';
+import sequelize from '../index';
 
 export interface AccountsAttributes
   extends Optional<Accounts, 'finacardno' | 'id' | 'manuallyaddedmoney'> {}
@@ -20,6 +21,10 @@ export const AccountsTable = sequelize.define<UserInstance>('accounts', {
     type: DataTypes.INTEGER,
     unique: true,
   },
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
   accountname: {
     allowNull: false,
     type: DataTypes.STRING,
@@ -31,7 +36,7 @@ export const AccountsTable = sequelize.define<UserInstance>('accounts', {
 
   finacardno: {
     allowNull: false,
-    autoIncrement: true,
+
     type: DataTypes.FLOAT,
   },
 
@@ -42,6 +47,11 @@ export const AccountsTable = sequelize.define<UserInstance>('accounts', {
 
   totalmoney: {
     allowNull: false,
-    type: DataTypes.NUMBER,
+    type: DataTypes.FLOAT,
   },
+});
+
+AccountsTable.hasMany(AccountLogTable, {
+  sourceKey: 'id',
+  foreignKey: 'accountId',
 });

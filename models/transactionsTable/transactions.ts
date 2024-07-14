@@ -1,6 +1,6 @@
 import { DataTypes, Model, Optional } from 'sequelize';
-import sequelize from '../index';
 import { Transactions } from '../../interfaces/transactions';
+import sequelize from '../index';
 export interface TransactionsAttributes extends Optional<Transactions, 'id'> {}
 export interface TransactionsInstance
   extends Model<Transactions, TransactionsAttributes>,
@@ -19,18 +19,27 @@ const Transactionstable = sequelize.define<TransactionsInstance>(
       type: DataTypes.INTEGER,
       unique: true,
     },
-
-    categories: {
+    userId: {
       allowNull: false,
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
     },
-    merchants: {
+
+    type: {
       allowNull: false,
       type: DataTypes.STRING,
     },
     amount: {
       allowNull: false,
       type: DataTypes.FLOAT,
+    },
+    category: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
+    timestamp: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: new Date(),
     },
   }
 );
