@@ -1,5 +1,9 @@
 import { Response, Router } from 'express';
-import { getAllUserAccounts } from '../controllers/account.controller';
+import {
+  createAccount,
+  getAllUserAccounts,
+} from '../controllers/account.controller';
+import { addAccountLog } from '../controllers/accountLogController';
 import { createUser, login } from '../controllers/usercreate';
 import { ExtendedRequest } from '../interfaces/extendedRequest';
 import { authMiddleware } from '../middlewares/auth';
@@ -16,5 +20,7 @@ router.get(
   (req: ExtendedRequest, res: Response) => res.send(req.user)
 );
 router.get('/user/accounts', authMiddleware, getAllUserAccounts);
+router.post('/addaccountlog', addAccountLog),
+  router.post('/addaccount', createAccount);
 
 export default router;

@@ -1,7 +1,7 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import { AccountLog } from '../../interfaces/accountlogs';
 import sequelize from '../index';
-export interface AccountLogAttributes extends Optional<AccountLog, 'id'> {}
+export interface AccountLogAttributes extends Optional<AccountLog, 'id'|'accountId'> {}
 export interface AccounLogInstance
   extends Model<AccountLog, AccountLogAttributes>,
     AccountLog {
