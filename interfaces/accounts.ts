@@ -1,9 +1,10 @@
 export interface Accounts {
   id: number;
-  userId: number;
+  userId?: number;
   accountname: string;
   bankname: string;
-  finacardno: string;
-  manuallyaddedmoney: number;
+  accounttype: 'Credit' | 'Debit';
+  finacardno?: string;
+  manuallyaddedmoney?: number;
   totalmoney: number;
 }

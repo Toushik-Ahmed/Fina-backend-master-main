@@ -7,6 +7,7 @@ import accountLogRouter from './accountsLogRouter';
 import { accountsRouter } from './accountsRouter';
 import budgetRouter from './budgetRouter';
 import merchantRouter from './merchantRouter';
+import transactionRouter from './transactionRouter';
 
 const router = Router();
 
@@ -25,4 +26,5 @@ router.use('/accounts', authMiddleware, accountsRouter);
 router.use('/accountLog', authMiddleware, accountLogRouter);
 router.use('/budget', authMiddleware, budgetRouter);
 router.use('/merchants', authMiddleware, merchantRouter);
+router.use('/transaction',authMiddleware,transactionRouter)
 export default router;

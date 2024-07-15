@@ -33,7 +33,10 @@ export const AccountsTable = sequelize.define<UserInstance>('accounts', {
     allowNull: false,
     type: DataTypes.STRING,
   },
-
+  accounttype: {
+    allowNull: false,
+    type: DataTypes.ENUM('Credit', 'Debit'),
+  },
   finacardno: {
     allowNull: false,
 

@@ -9,3 +9,16 @@ export const addAccount = async (data: Accounts) => {
     throw new Error('error');
   }
 };
+
+export const deleteAccount = async (id: number) => {
+  try {
+    await AccountsTable.destroy({
+      where: {
+        userId: id,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    throw new Error('error');
+  }
+};
