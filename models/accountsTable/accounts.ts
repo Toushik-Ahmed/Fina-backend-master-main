@@ -38,13 +38,13 @@ export const AccountsTable = sequelize.define<UserInstance>('accounts', {
     type: DataTypes.ENUM('Credit', 'Debit'),
   },
   finacardno: {
-    allowNull: false,
+    allowNull: true,
 
     type: DataTypes.FLOAT,
   },
 
   manuallyaddedmoney: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.FLOAT,
   },
 

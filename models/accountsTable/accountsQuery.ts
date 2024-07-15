@@ -6,7 +6,7 @@ export const addAccount = async (data: Accounts) => {
     const account = await AccountsTable.create(data);
     return account;
   } catch (error) {
-    throw new Error('error');
+    throw  error
   }
 };
 
