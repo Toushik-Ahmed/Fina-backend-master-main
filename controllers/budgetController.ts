@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { Budgets } from '../interfaces/budgets';
+import { ExtendedRequest } from '../interfaces/extendedRequest';
 import {
   addBudget,
   deleteUserBudget,
@@ -7,10 +8,13 @@ import {
   updateUserBudget,
 } from '../models/budgetsTable/budgetQuery';
 
-export const addbudget = async (req: Request, res: Response) => {
+export const addbudget = async (req: ExtendedRequest, res: Response) => {
   try {
-    const data: Budgets = req.body;
-    const budget = await addBudget(data);
+    const data: Omit<Budgets, 'userId'> = req.body;
+    const budget = await addBudget({
+      ...data,
+      userId: req.user?.id || 1,
+    });
     res.status(201).json(budget);
   } catch (error) {
     console.log(error);

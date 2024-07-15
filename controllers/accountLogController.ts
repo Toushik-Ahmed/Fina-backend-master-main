@@ -1,14 +1,18 @@
-import { Request, Response } from "express";
-import { AccountLog } from "../interfaces/accountlogs";
+import { Request, Response } from 'express';
+import { AccountLog } from '../interfaces/accountlogs';
 import {
   accountLog,
   getAccountLogByAccountId,
-} from "../models/accountsLogTable/accountsLogQuery";
+} from '../models/accountsLogTable/accountsLogQuery';
 
 export async function addAccountLog(req: Request, res: Response) {
   try {
-    const data: AccountLog = req.body;
-    const result = await accountLog(data);
+    const data: Omit<AccountLog, 'accountId'> = req.body;
+
+    const result = await accountLog({
+      ...data,
+      accountId: req.body.accountId || 1,
+    });
     res.status(201).json(result);
   } catch (error) {
     console.log(error);

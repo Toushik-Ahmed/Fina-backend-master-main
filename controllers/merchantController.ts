@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { ExtendedRequest } from '../interfaces/extendedRequest';
 import { Merchant } from '../interfaces/merchant';
 import {
   create,
@@ -6,10 +7,13 @@ import {
   getAllMerchants,
 } from '../models/merchantsTable/merchantsquery';
 
-export const addmerchant = async (req: Request, res: Response) => {
+export const addmerchant = async (req: ExtendedRequest, res: Response) => {
   try {
-    const data: Merchant = req.body;
-    const merchantResult = await create(data);
+    const data: Omit<Merchant, 'userId'> = req.body;
+    const merchantResult = await create({
+      ...data,
+      userId: req.user?.id || 1,
+    });
     res.status(201).json(merchantResult);
   } catch (error) {
     console.log(error);
