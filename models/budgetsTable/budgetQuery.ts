@@ -15,6 +15,7 @@ export const getAllBudget = async () => {
     const getUsersBudget = Budgetstable.findAll();
     return getUsersBudget;
   } catch (error) {
+    console.log(error);
     throw new Error('error');
   }
 };
@@ -27,7 +28,7 @@ export const deleteUserBudget = async (id: number) => {
       },
     });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     throw new Error('error');
   }
 };

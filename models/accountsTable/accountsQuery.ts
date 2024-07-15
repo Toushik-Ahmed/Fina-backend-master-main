@@ -22,3 +22,13 @@ export const deleteAccount = async (id: number) => {
     throw new Error('error');
   }
 };
+
+// export const  getalluserAccounts=async()=>{
+//   try {
+//      const getalluseraccounts=AccountsTable.findAll();
+//      return getalluseraccounts
+//   } catch (error) {
+//     console.log(error)
+//     throw new Error('error');
+//   }
+// }
