@@ -3,6 +3,7 @@ import { ExtendedRequest } from '../interfaces/extendedRequest';
 import { Transactions } from '../interfaces/transactions';
 import {
   createTransaction,
+  getAllTransaction,
   transQueryByDate,
   transQueryBySpecificDate,
 } from '../models/transactionsTable/transactionQuery';
@@ -38,6 +39,16 @@ export const transactionQueryByDate = async (req: Request, res: Response) => {
     const { date } = req.body;
     const transactions = await transQueryBySpecificDate(date);
     res.status(201).json(transactions);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+};
+
+export const transactionGetAll = async (req: Request, res: Response) => {
+  try {
+    const getAll = await getAllTransaction();
+    res.status(201).json(getAll);
   } catch (error) {
     console.log(error);
     res.status(500).json(error);

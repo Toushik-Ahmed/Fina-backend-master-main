@@ -20,10 +20,17 @@ const Transactionstable = sequelize.define<TransactionsInstance>(
       unique: true,
     },
     userId: {
-      allowNull: false,
+      allowNull: true,
       type: DataTypes.INTEGER,
     },
-
+    merchantId: {
+      allowNull: true,
+      type: DataTypes.INTEGER,
+    },
+   merchantName:{
+    allowNull:false,
+    type:DataTypes.STRING,
+   },
     type: {
       allowNull: false,
       type: DataTypes.STRING,
@@ -38,7 +45,7 @@ const Transactionstable = sequelize.define<TransactionsInstance>(
     },
     timestamp: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
       defaultValue: new Date(),
     },
   }

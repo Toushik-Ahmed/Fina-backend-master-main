@@ -33,5 +33,5 @@ export const MerchantTable = sequelize.define<MerchantInstance>('merchants', {
 });
 
 MerchantTable.hasMany(Transactionstable, {
-  foreignKey: 'merchantID',
+  foreignKey: 'merchantId',
 });

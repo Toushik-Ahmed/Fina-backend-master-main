@@ -6,7 +6,8 @@ export const createTransaction = async (data: Transactions) => {
     const transaction = await Transactionstable.create(data);
     return transaction;
   } catch (error) {
-    throw new Error('error');
+    console.log('Error adding transaction:error');
+    throw error;
   }
 };
 
@@ -45,6 +46,16 @@ export const transQueryBySpecificDate = async (specificDate: Date) => {
       },
     });
     return transactionData;
+  } catch (error) {
+    console.log(error);
+    throw new Error('Error');
+  }
+};
+
+export const getAllTransaction = async () => {
+  try {
+    const getalltransaction = await Transactionstable.findAll();
+    return getalltransaction;
   } catch (error) {
     console.log(error);
     throw new Error('Error');
