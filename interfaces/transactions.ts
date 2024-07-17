@@ -1,5 +1,5 @@
 export interface Transactions {
-  id: number;
+  id?: number;
   userId?: number;
   merchantName: string;
   type: string;

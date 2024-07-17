@@ -1,3 +1,4 @@
+import http from "http";
 import cors from "cors";
 import express, { Express } from "express";
 import config from "./config";
@@ -9,16 +10,65 @@ import { MerchantTable } from "./models/merchantsTable/merchantsTable";
 import Transactionstable from "./models/transactionsTable/transactions";
 import UserTable from "./models/users table/user";
 import router from "./routers/router";
+import { Server } from "socket.io";
+import { createTransaction } from "./models/transactionsTable/transactionQuery";
 
-const SECRET = process.env.SECRET;
+const RANDOM_TIME_START = 10000;
+const RANDOM_TIME_END = 60000;
 
 const app: Express = express();
-app.use(cors());
+app.use(cors({ origin: "*" }));
 
 app.use(express.json());
-
 app.use(router);
-(async function bootstrap() {
+
+const server = http.createServer(app);
+
+const socketIo = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
+
+socketIo.on("connection", (socket) => {
+  socket.emit("connected", socket.id);
+});
+
+const getRandomNumber = (from: number, to: number) => {
+  return Math.round(Math.random() * (to - from) + from);
+};
+
+const dummyCategories = [
+  "clothing",
+  "groceries",
+  "game",
+  "others",
+  "transport",
+];
+const dummyMerchants = ["aarong", "walmart"];
+
+const emitNewTransaction = async () => {
+  await createTransaction({
+    amount: getRandomNumber(400, 2000),
+    category: dummyCategories[getRandomNumber(0, 4)],
+    merchantName: dummyMerchants[getRandomNumber(0, 1)],
+    type: "auto",
+    userId: 1,
+  });
+  socketIo.emit("new-transaction");
+  setTimeout(
+    emitNewTransaction,
+    getRandomNumber(RANDOM_TIME_START, RANDOM_TIME_END)
+  );
+};
+
+setTimeout(() => {
+  emitNewTransaction();
+}, getRandomNumber(RANDOM_TIME_START, RANDOM_TIME_END));
+
+async function bootstrap() {
   try {
     await sequelize.sync();
     await UserTable.sync();
@@ -27,10 +77,11 @@ app.use(router);
     await Transactionstable.sync();
     await AccountLogTable.sync();
     await Budgetstable.sync();
-    app.listen(config.PORT, () => {
+    server.listen(config.PORT, () => {
       console.log(`[server]: Server is running on port ${config.PORT}`);
     });
   } catch (error) {
     console.log(error);
   }
-})();
+}
+bootstrap();
