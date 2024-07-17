@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pronoy": "nodemon"
+    "pronoy": "nodemon",
+    "build": "tsc",
+    "start": "node --env-file=.env ./dist/index.js"
   },
   "author": "Pronoy",
   "license": "ISC",

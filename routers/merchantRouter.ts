@@ -9,6 +9,6 @@ const merchantRouter = Router();
 
 merchantRouter.post('/add', addmerchant);
 merchantRouter.get('/getAll', getallmerchants);
-merchantRouter.delete('./delete', deleteMerchant);
+merchantRouter.delete('/delete', deleteMerchant);
 
 export default merchantRouter;
