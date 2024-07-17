@@ -9,6 +9,6 @@ const budgetRouter = Router();
 
 budgetRouter.post('/addBudget', addbudget);
 budgetRouter.get('/getBudget', getallbudget);
-budgetRouter.delete('./deleteBudget', deletebudget);
+budgetRouter.delete('/deleteBudget', deletebudget);
 
 export default budgetRouter;
