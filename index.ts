@@ -1,23 +1,23 @@
-import http from "http";
-import cors from "cors";
-import express, { Express } from "express";
-import config from "./config";
-import sequelize from "./models/";
-import { AccountLogTable } from "./models/accountsLogTable/accountsLog";
-import { AccountsTable } from "./models/accountsTable/accounts";
-import Budgetstable from "./models/budgetsTable/budget";
-import { MerchantTable } from "./models/merchantsTable/merchantsTable";
-import Transactionstable from "./models/transactionsTable/transactions";
-import UserTable from "./models/users table/user";
-import router from "./routers/router";
-import { Server } from "socket.io";
-import { createTransaction } from "./models/transactionsTable/transactionQuery";
+import cors from 'cors';
+import express, { Express } from 'express';
+import http from 'http';
+import { Server } from 'socket.io';
+import config from './config';
+import sequelize from './models/';
+import { AccountLogTable } from './models/accountsLogTable/accountsLog';
+import { AccountsTable } from './models/accountsTable/accounts';
+import Budgetstable from './models/budgetsTable/budget';
+import { MerchantTable } from './models/merchantsTable/merchantsTable';
+import { createTransaction } from './models/transactionsTable/transactionQuery';
+import Transactionstable from './models/transactionsTable/transactions';
+import UserTable from './models/users table/user';
+import router from './routers/router';
 
-const RANDOM_TIME_START = 10000;
-const RANDOM_TIME_END = 60000;
+const RANDOM_TIME_START = 20000;
+const RANDOM_TIME_END = 80000;
 
 const app: Express = express();
-app.use(cors({ origin: "*" }));
+app.use(cors({ origin: '*' }));
 
 app.use(express.json());
 app.use(router);
@@ -26,14 +26,14 @@ const server = http.createServer(app);
 
 const socketIo = new Server(server, {
   cors: {
-    origin: "*",
-    methods: ["GET", "POST"],
+    origin: '*',
+    methods: ['GET', 'POST'],
     credentials: true,
   },
 });
 
-socketIo.on("connection", (socket) => {
-  socket.emit("connected", socket.id);
+socketIo.on('connection', (socket) => {
+  socket.emit('connected', socket.id);
 });
 
 const getRandomNumber = (from: number, to: number) => {
@@ -41,23 +41,23 @@ const getRandomNumber = (from: number, to: number) => {
 };
 
 const dummyCategories = [
-  "clothing",
-  "groceries",
-  "game",
-  "others",
-  "transport",
+  'clothing',
+  'groceries',
+  'game',
+  'others',
+  'transport',
 ];
-const dummyMerchants = ["aarong", "walmart"];
+const dummyMerchants = ['aarong', 'walmart'];
 
 const emitNewTransaction = async () => {
   await createTransaction({
     amount: getRandomNumber(400, 2000),
     category: dummyCategories[getRandomNumber(0, 4)],
     merchantName: dummyMerchants[getRandomNumber(0, 1)],
-    type: "auto",
+    type: 'auto',
     userId: 1,
   });
-  socketIo.emit("new-transaction");
+  socketIo.emit('new-transaction');
   setTimeout(
     emitNewTransaction,
     getRandomNumber(RANDOM_TIME_START, RANDOM_TIME_END)
