@@ -1,6 +1,11 @@
-export interface Budgets {
+export interface Budget {
   id: number;
-  userId: number;
+  userId?: number;
+
   category: string;
   budget: number;
 }
+// export interface BudgetCard {
+//   category: string;
+//   budget: number;
+// }

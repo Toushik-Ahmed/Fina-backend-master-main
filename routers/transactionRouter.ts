@@ -11,6 +11,6 @@ const transactionRouter = Router();
 transactionRouter.post('/add', addTransaction);
 transactionRouter.post('/queryByRange', transactionQueryByRange);
 transactionRouter.post('/queryByDate', transactionQueryByDate);
-transactionRouter.get('/getaAll',transactionGetAll)
+transactionRouter.get('/getAll',transactionGetAll)
 
 export default transactionRouter;

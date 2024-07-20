@@ -6,7 +6,7 @@ export const create = async (data: Merchant) => {
     const merchant = await MerchantTable.create(data);
     return merchant;
   } catch (error) {
-    throw new Error('error');
+    throw error;
   }
 };
 
@@ -15,7 +15,8 @@ export const getAllMerchants = async () => {
     const getallmerchants = MerchantTable.findAll();
     return getallmerchants;
   } catch (error) {
-    throw new Error('error');
+    console.log(error);
+    throw Error;
   }
 };
 
@@ -27,6 +28,7 @@ export const deleteMerchantById = async (id: number) => {
       },
     });
   } catch (error) {
+    console.log(error);
     throw new Error('error');
   }
 };

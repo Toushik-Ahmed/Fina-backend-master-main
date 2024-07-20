@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Budgets } from '../interfaces/budgets';
+import { Budget } from '../interfaces/budgets';
 import { ExtendedRequest } from '../interfaces/extendedRequest';
 import {
   addBudget,
@@ -10,7 +10,7 @@ import {
 
 export const addbudget = async (req: ExtendedRequest, res: Response) => {
   try {
-    const data: Omit<Budgets, 'userId'> = req.body;
+    const data: Omit<Budget, 'userId'> = req.body;
     const budget = await addBudget({
       ...data,
       userId: req.user?.id || 1,

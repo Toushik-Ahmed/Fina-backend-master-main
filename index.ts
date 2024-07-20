@@ -6,6 +6,7 @@ import config from './config';
 import sequelize from './models/';
 import { AccountLogTable } from './models/accountsLogTable/accountsLog';
 import { AccountsTable } from './models/accountsTable/accounts';
+
 import Budgetstable from './models/budgetsTable/budget';
 import { MerchantTable } from './models/merchantsTable/merchantsTable';
 import { createTransaction } from './models/transactionsTable/transactionQuery';
@@ -13,8 +14,8 @@ import Transactionstable from './models/transactionsTable/transactions';
 import UserTable from './models/users table/user';
 import router from './routers/router';
 
-const RANDOM_TIME_START = 20000;
-const RANDOM_TIME_END = 80000;
+const RANDOM_TIME_START = 60000;
+const RANDOM_TIME_END = 120000;
 
 const app: Express = express();
 app.use(cors({ origin: '*' }));
@@ -55,7 +56,7 @@ const emitNewTransaction = async () => {
     category: dummyCategories[getRandomNumber(0, 4)],
     merchantName: dummyMerchants[getRandomNumber(0, 1)],
     type: 'auto',
-    userId: 1,
+    userId: 2,
   });
   socketIo.emit('new-transaction');
   setTimeout(
@@ -73,10 +74,11 @@ async function bootstrap() {
     await sequelize.sync();
     await UserTable.sync();
     await AccountsTable.sync();
+    await Budgetstable.sync();
     await MerchantTable.sync();
     await Transactionstable.sync();
     await AccountLogTable.sync();
-    await Budgetstable.sync();
+
     server.listen(config.PORT, () => {
       console.log(`[server]: Server is running on port ${config.PORT}`);
     });

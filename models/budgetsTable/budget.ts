@@ -1,16 +1,16 @@
 import { DataTypes, Model, Optional } from 'sequelize';
-import { Budgets } from '../../interfaces/budgets';
+import { Budget } from '../../interfaces/budgets';
 import sequelize from '../index';
 
-export interface BudgetsAttributes extends Optional<Budgets, 'id'> {}
+export interface BudgetsAttributes extends Optional<Budget, 'id' | 'userId'> {}
 export interface BudgetsInstance
-  extends Model<Budgets, BudgetsAttributes>,
-    Budgets {
+  extends Model<Budget, BudgetsAttributes>,
+    Budget {
   createdAt?: Date;
   updatedAt?: Date;
 }
 
-const Budgetstable = sequelize.define('user', {
+const Budgetstable = sequelize.define<BudgetsInstance>('budgets', {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -28,7 +28,7 @@ const Budgetstable = sequelize.define('user', {
   },
   budget: {
     allowNull: false,
-    type: DataTypes.STRING,
+    type: DataTypes.FLOAT,
   },
 });
 

@@ -1,12 +1,12 @@
-import { Budgets } from '../../interfaces/budgets';
+import { Budget } from '../../interfaces/budgets';
 import Budgetstable from './budget';
 
-export const addBudget = async (data: Budgets) => {
+export const addBudget = async (data: Budget) => {
   try {
-    const budget = await Budgetstable.create({ data });
-    return budget;
+    const addedBudget = Budgetstable.create(data);
+    return addedBudget;
   } catch (error) {
-    throw new Error('error');
+    console.log(error);
   }
 };
 
@@ -42,6 +42,7 @@ export const updateUserBudget = async (up: any, id: number) => {
     });
     return editedBudget;
   } catch (error) {
+    console.log(error);
     throw new Error('error');
   }
 };

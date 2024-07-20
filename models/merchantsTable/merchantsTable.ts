@@ -2,7 +2,9 @@ import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '..';
 import { Merchant } from '../../interfaces/merchant';
 import Transactionstable from '../transactionsTable/transactions';
-export interface MerchantAttributes extends Optional<Merchant, 'id'> {}
+
+export interface MerchantAttributes
+  extends Optional<Merchant, 'id' | 'userId'> {}
 export interface MerchantInstance
   extends Model<Merchant, MerchantAttributes>,
     Merchant {
@@ -22,7 +24,11 @@ export const MerchantTable = sequelize.define<MerchantInstance>('merchants', {
     allowNull: false,
     type: DataTypes.INTEGER,
   },
-  name: {
+  type: {
+    allowNull: false,
+    type: DataTypes.STRING,
+  },
+  merchantName: {
     allowNull: false,
     type: DataTypes.STRING,
   },
@@ -33,5 +39,6 @@ export const MerchantTable = sequelize.define<MerchantInstance>('merchants', {
 });
 
 MerchantTable.hasMany(Transactionstable, {
+  sourceKey: 'id',
   foreignKey: 'merchantId',
 });
