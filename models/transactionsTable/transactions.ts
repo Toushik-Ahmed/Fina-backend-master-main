@@ -24,13 +24,13 @@ const Transactionstable = sequelize.define<TransactionsInstance>(
       type: DataTypes.INTEGER,
     },
     merchantId: {
-      allowNull: true,
+      allowNull: false,
       type: DataTypes.INTEGER,
     },
-   merchantName:{
-    allowNull:false,
-    type:DataTypes.STRING,
-   },
+    merchantName: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
     type: {
       allowNull: false,
       type: DataTypes.STRING,
