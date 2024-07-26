@@ -26,6 +26,7 @@ export const getallmerchants = async (req: Request, res: Response) => {
     const result = await getAllMerchants();
     res.send(result);
   } catch (error) {
+    console.error(error)
     console.log('error occured');
   }
 };

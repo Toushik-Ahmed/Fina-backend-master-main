@@ -56,7 +56,8 @@ const emitNewTransaction = async () => {
     category: dummyCategories[getRandomNumber(0, 4)],
     merchantName: dummyMerchants[getRandomNumber(0, 1)],
     type: 'auto',
-    userId: 2,
+    userId: 1,
+    merchantId: 1
   });
   socketIo.emit('new-transaction');
   setTimeout(

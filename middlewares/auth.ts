@@ -11,7 +11,6 @@ export const authMiddleware = async (
 ) => {
   // extract token from auth headers
   const authHeaders = req.headers['authorization'];
-  console.log(authHeaders);
   if (!authHeaders) return res.sendStatus(403);
   const token = authHeaders.split(' ')[1];
 
