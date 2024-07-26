@@ -24,7 +24,7 @@ export const deleteUserBudget = async (id: number) => {
   try {
     await Budgetstable.destroy({
       where: {
-        $id$: id,
+        id: id,
       },
     });
   } catch (error) {
@@ -37,7 +37,7 @@ export const updateUserBudget = async (up: any, id: number) => {
   try {
     const editedBudget = await Budgetstable.update(up, {
       where: {
-        $id$: id,
+        id: id,
       },
     });
     return editedBudget;
