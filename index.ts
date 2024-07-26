@@ -48,7 +48,7 @@ const dummyCategories = [
   'others',
   'transport',
 ];
-const dummyMerchants = ['aarong', 'walmart'];
+const dummyMerchants = ['arong', 'walmart'];
 
 const emitNewTransaction = async () => {
   await createTransaction({
@@ -56,8 +56,8 @@ const emitNewTransaction = async () => {
     category: dummyCategories[getRandomNumber(0, 4)],
     merchantName: dummyMerchants[getRandomNumber(0, 1)],
     type: 'auto',
-    userId: 1,
-    merchantId: 1
+    userId: 2,
+    merchantId: 1,
   });
   socketIo.emit('new-transaction');
   setTimeout(
