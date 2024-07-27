@@ -25,23 +25,26 @@ export const addTransaction = async (req: ExtendedRequest, res: Response) => {
 
 export const transactionQueryByRange = async (req: Request, res: Response) => {
   try {
-    const { timestamp1, timestamp2 } = req.body;
-    const allTransaction = await transQueryByDate(timestamp1, timestamp2);
-    res.status(201).json(allTransaction);
+    const { startDate, endDate } = req.query;
+    const transactions = await transQueryByDate(
+      new Date(startDate as string),
+      new Date(endDate as string)
+    );
+    res.status(200).json(transactions);
   } catch (error) {
     console.log(error);
-    res.status(500).json(error);
+    res.status(500).json({ message: 'Error querying transactions' });
   }
 };
 
 export const transactionQueryByDate = async (req: Request, res: Response) => {
   try {
-    const { date } = req.body;
-    const transactions = await transQueryBySpecificDate(date);
-    res.status(201).json(transactions);
+    const { date } = req.query;
+    const transactions = await transQueryBySpecificDate(date as string);
+    res.status(200).json(transactions);
   } catch (error) {
     console.log(error);
-    res.status(500).json(error);
+    res.status(500).json({ message: 'Error querying transactions' });
   }
 };
 

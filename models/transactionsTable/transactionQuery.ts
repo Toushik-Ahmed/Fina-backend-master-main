@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import { Transactions } from '../../interfaces/transactions';
 import Transactionstable from './transactions';
 
@@ -13,42 +14,47 @@ export const createTransaction = async (data: Transactions) => {
 
 export const transQueryByDate = async (startDate: Date, endDate: Date) => {
   try {
+    const startUTC = new Date(startDate);
+    startUTC.setUTCHours(0, 0, 0, 0);
+
+    const endUTC = new Date(endDate);
+    endUTC.setUTCHours(23, 59, 59, 999);
+
     const transactionData = await Transactionstable.findAll({
       where: {
         timestamp: {
-          $between: [startDate, endDate],
+          [Op.between]: [startUTC, endUTC],
         },
       },
     });
+
     return transactionData;
   } catch (error) {
     console.log(error);
-    throw new Error('Error');
+    throw new Error('Error querying transactions');
   }
 };
-export const transQueryBySpecificDate = async (specificDate: Date) => {
+export const transQueryBySpecificDate = async (specificDate: string) => {
   try {
-    // Create startDate and endDate for the specific date
-    const startDate = new Date(specificDate);
-    const endDate = new Date(specificDate);
+    const date = new Date(specificDate);
+    const startDate = new Date(date);
+    const endDate = new Date(date);
 
-    // Set startDate to the beginning of the specific date
-    startDate.setHours(0, 0, 0, 0);
-
-    // Set endDate to the end of the specific date
-    endDate.setHours(23, 59, 59, 999);
+    startDate.setUTCHours(0, 0, 0, 0);
+    endDate.setUTCHours(23, 59, 59, 999);
 
     const transactionData = await Transactionstable.findAll({
       where: {
         timestamp: {
-          $between: [startDate, endDate],
+          [Op.between]: [startDate, endDate],
         },
       },
     });
+
     return transactionData;
   } catch (error) {
     console.log(error);
-    throw new Error('Error');
+    throw new Error('Error querying transactions');
   }
 };
 
