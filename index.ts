@@ -14,8 +14,8 @@ import Transactionstable from './models/transactionsTable/transactions';
 import UserTable from './models/users table/user';
 import router from './routers/router';
 
-const RANDOM_TIME_START = 6000000;
-const RANDOM_TIME_END = 12000000;
+const RANDOM_TIME_START = 60000000;
+const RANDOM_TIME_END = 120000000;
 
 const app: Express = express();
 app.use(cors({ origin: '*' }));
@@ -45,10 +45,10 @@ const dummyCategories = [
   'clothing',
   'groceries',
   'game',
-  'others',
+  " Tech",
   'transport',
 ];
-const dummyMerchants = ['arong', 'walmart'];
+const dummyMerchants = ['arong', 'walton','Nike'];
 
 const emitNewTransaction = async () => {
   await createTransaction({
@@ -57,7 +57,7 @@ const emitNewTransaction = async () => {
     merchantName: dummyMerchants[getRandomNumber(0, 1)],
     type: 'auto',
     userId: 2,
-    merchantId: 1,
+    merchantId: 8,
   });
   socketIo.emit('new-transaction');
   setTimeout(

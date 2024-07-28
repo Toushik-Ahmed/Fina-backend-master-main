@@ -16,6 +16,7 @@ export const getAllUserAccounts = async (
       });
     }
     const accounts = await AccountsTable.findAll();
+    console.log(accounts)
     return res.send(accounts);
   } catch (error) {
     res.status(500).send({
