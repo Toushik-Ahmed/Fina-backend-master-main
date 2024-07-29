@@ -1,5 +1,6 @@
 import { Op } from 'sequelize';
 import { Transactions } from '../../interfaces/transactions';
+import { User } from '../../interfaces/user.interface';
 import Transactionstable from './transactions';
 
 export const createTransaction = async (data: Transactions) => {
@@ -12,7 +13,11 @@ export const createTransaction = async (data: Transactions) => {
   }
 };
 
-export const transQueryByDate = async (startDate: Date, endDate: Date) => {
+export const transQueryByDate = async (
+  startDate: Date,
+  endDate: Date,
+  user: User
+) => {
   try {
     const startUTC = new Date(startDate);
     startUTC.setUTCHours(0, 0, 0, 0);
@@ -22,6 +27,7 @@ export const transQueryByDate = async (startDate: Date, endDate: Date) => {
 
     const transactionData = await Transactionstable.findAll({
       where: {
+        userId: user.id,
         timestamp: {
           [Op.between]: [startUTC, endUTC],
         },
@@ -34,7 +40,10 @@ export const transQueryByDate = async (startDate: Date, endDate: Date) => {
     throw new Error('Error querying transactions');
   }
 };
-export const transQueryBySpecificDate = async (specificDate: string) => {
+export const transQueryBySpecificDate = async (
+  specificDate: string,
+  user: User
+) => {
   try {
     const date = new Date(specificDate);
     const startDate = new Date(date);
@@ -45,6 +54,7 @@ export const transQueryBySpecificDate = async (specificDate: string) => {
 
     const transactionData = await Transactionstable.findAll({
       where: {
+        userId: user.id,
         timestamp: {
           [Op.between]: [startDate, endDate],
         },
@@ -58,9 +68,13 @@ export const transQueryBySpecificDate = async (specificDate: string) => {
   }
 };
 
-export const getAllTransaction = async () => {
+export const getAllTransaction = async (user: User) => {
   try {
-    const getalltransaction = await Transactionstable.findAll();
+    const getalltransaction = await Transactionstable.findAll({
+      where: {
+        userId: user.id,
+      },
+    });
     return getalltransaction;
   } catch (error) {
     console.log(error);

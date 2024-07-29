@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { ExtendedRequest } from '../interfaces/extendedRequest';
 import { Merchant } from '../interfaces/merchant';
 import {
@@ -21,21 +21,32 @@ export const addmerchant = async (req: ExtendedRequest, res: Response) => {
   }
 };
 
-export const getallmerchants = async (req: Request, res: Response) => {
+export const getallmerchants = async (req: ExtendedRequest, res: Response) => {
   try {
-    const result = await getAllMerchants();
+    const { user } = req;
+    if (!user) {
+      return res.status(401).send({
+        message: 'Unauthorized',
+      });
+    }
+    const result = await getAllMerchants(user);
     res.send(result);
   } catch (error) {
-    console.error(error)
+    console.error(error);
     console.log('error occured');
   }
 };
 
-export const deleteMerchant = async (req: Request, res: Response) => {
+export const deleteMerchant = async (req: ExtendedRequest, res: Response) => {
   try {
-    const id = req.params.id;
-    const userId = Number(id);
-    const deletemerchant = await deleteMerchantById(userId);
+    const id = Number(req.params.id);
+    const userId = req.user?.id;
+    if (!userId) {
+      return res.status(401).send({
+        message: 'unauthorized',
+      });
+    }
+    const deletemerchant = await deleteMerchantById(id, userId);
     res.status(201).json(deletemerchant);
   } catch (error) {
     throw new Error('error');

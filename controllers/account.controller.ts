@@ -15,7 +15,11 @@ export const getAllUserAccounts = async (
         message: 'Unauthorized',
       });
     }
-    const accounts = await AccountsTable.findAll();
+    const accounts = await AccountsTable.findAll({
+      where: {
+        userId: user.id,
+      },
+    });
 
     return res.send(accounts);
   } catch (error) {

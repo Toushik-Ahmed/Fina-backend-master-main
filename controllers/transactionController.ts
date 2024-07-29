@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { ExtendedRequest } from '../interfaces/extendedRequest';
 import { Transactions } from '../interfaces/transactions';
 import {
@@ -23,12 +23,22 @@ export const addTransaction = async (req: ExtendedRequest, res: Response) => {
   }
 };
 
-export const transactionQueryByRange = async (req: Request, res: Response) => {
+export const transactionQueryByRange = async (
+  req: ExtendedRequest,
+  res: Response
+) => {
   try {
     const { startDate, endDate } = req.query;
+    const { user } = req;
+    if (!user) {
+      return res.status(401).send({
+        message: 'Unauthorized',
+      });
+    }
     const transactions = await transQueryByDate(
       new Date(startDate as string),
-      new Date(endDate as string)
+      new Date(endDate as string),
+      user
     );
     res.status(200).json(transactions);
   } catch (error) {
@@ -37,10 +47,19 @@ export const transactionQueryByRange = async (req: Request, res: Response) => {
   }
 };
 
-export const transactionQueryByDate = async (req: Request, res: Response) => {
+export const transactionQueryByDate = async (
+  req: ExtendedRequest,
+  res: Response
+) => {
   try {
     const { date } = req.query;
-    const transactions = await transQueryBySpecificDate(date as string);
+    const { user } = req;
+    if (!user) {
+      return res.status(401).send({
+        message: 'Unauthorized',
+      });
+    }
+    const transactions = await transQueryBySpecificDate(date as string, user);
     res.status(200).json(transactions);
   } catch (error) {
     console.log(error);
@@ -48,9 +67,18 @@ export const transactionQueryByDate = async (req: Request, res: Response) => {
   }
 };
 
-export const transactionGetAll = async (req: Request, res: Response) => {
+export const transactionGetAll = async (
+  req: ExtendedRequest,
+  res: Response
+) => {
   try {
-    const getAll = await getAllTransaction();
+    const { user } = req;
+    if (!user) {
+      return res.status(401).send({
+        message: 'unauthorized',
+      });
+    }
+    const getAll = await getAllTransaction(user);
     res.status(201).json(getAll);
   } catch (error) {
     console.log(error);

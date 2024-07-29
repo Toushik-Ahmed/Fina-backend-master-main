@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { Budget } from '../interfaces/budgets';
 import { ExtendedRequest } from '../interfaces/extendedRequest';
 import {
@@ -22,9 +22,15 @@ export const addbudget = async (req: ExtendedRequest, res: Response) => {
   }
 };
 
-export const getallbudget = async (req: Request, res: Response) => {
+export const getallbudget = async (req: ExtendedRequest, res: Response) => {
   try {
-    const getAll = await getAllBudget();
+    const { user } = req;
+    if (!user) {
+      return res.status(401).send({
+        message: 'Unauthorized',
+      });
+    }
+    const getAll = await getAllBudget(user);
     res.status(201).json(getAll);
   } catch (error) {
     console.log(error);
@@ -32,12 +38,16 @@ export const getallbudget = async (req: Request, res: Response) => {
   }
 };
 
-export const deletebudget = async (req: Request, res: Response) => {
+export const deletebudget = async (req: ExtendedRequest, res: Response) => {
   try {
-    const id = req.params.id;
-    const userId = Number(id);
-
-    const deletedBudget = await deleteUserBudget(userId);
+    const id =Number (req.params.id);
+    const userId = req.user?.id;
+    if (!userId) {
+      return res.status(401).send({
+        message: 'Unauthorized',
+      });
+    }
+    const deletedBudget = await deleteUserBudget(id,userId);
     res.status(201).json(deletedBudget);
   } catch (error) {
     console.log(error);
@@ -45,11 +55,16 @@ export const deletebudget = async (req: Request, res: Response) => {
   }
 };
 
-export const updatebudget = async (req: Request, res: Response) => {
+export const updatebudget = async (req: ExtendedRequest, res: Response) => {
   try {
-    const id = req.params.id;
-    const userId = Number(id);
-    const updateBudget = await updateUserBudget(req.body, userId);
+    const id = Number(req.params.id);
+    const userId =req.user?.id;
+    if (!userId) {
+      return res.status(401).send({
+        message: 'Unauthorized',
+      });
+    }
+    const updateBudget = await updateUserBudget(req.body, id,userId);
     res.status(201).json(updateBudget);
   } catch (error) {
     throw new Error('error');

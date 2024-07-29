@@ -1,4 +1,5 @@
 import { Budget } from '../../interfaces/budgets';
+import { User } from '../../interfaces/user.interface';
 import Budgetstable from './budget';
 
 export const addBudget = async (data: Budget) => {
@@ -10,9 +11,13 @@ export const addBudget = async (data: Budget) => {
   }
 };
 
-export const getAllBudget = async () => {
+export const getAllBudget = async (user: User) => {
   try {
-    const getUsersBudget = Budgetstable.findAll();
+    const getUsersBudget = Budgetstable.findAll({
+      where: {
+        userId: user.id,
+      },
+    });
     return getUsersBudget;
   } catch (error) {
     console.log(error);
@@ -20,11 +25,12 @@ export const getAllBudget = async () => {
   }
 };
 
-export const deleteUserBudget = async (id: number) => {
+export const deleteUserBudget = async (id: number, userId: number) => {
   try {
     await Budgetstable.destroy({
       where: {
         id: id,
+        userId: userId,
       },
     });
   } catch (error) {
@@ -33,11 +39,12 @@ export const deleteUserBudget = async (id: number) => {
   }
 };
 
-export const updateUserBudget = async (up: any, id: number) => {
+export const updateUserBudget = async (up: any, id: number, userId: number) => {
   try {
     const editedBudget = await Budgetstable.update(up, {
       where: {
         id: id,
+        userId: userId,
       },
     });
     return editedBudget;
