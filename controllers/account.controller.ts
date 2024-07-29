@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
-import { Accounts } from "../interfaces/accounts";
-import { ExtendedRequest } from "../interfaces/extendedRequest";
-import { AccountsTable } from "../models/accountsTable/accounts";
-import { addAccount } from "../models/accountsTable/accountsQuery";
+import { Response } from 'express';
+import { Accounts } from '../interfaces/accounts';
+import { ExtendedRequest } from '../interfaces/extendedRequest';
+import { AccountsTable } from '../models/accountsTable/accounts';
+import { addAccount } from '../models/accountsTable/accountsQuery';
 
 export const getAllUserAccounts = async (
   req: ExtendedRequest,
@@ -12,11 +12,11 @@ export const getAllUserAccounts = async (
     const { user } = req;
     if (!user) {
       return res.status(401).send({
-        message: "Unauthorized",
+        message: 'Unauthorized',
       });
     }
     const accounts = await AccountsTable.findAll();
-    console.log(accounts)
+
     return res.send(accounts);
   } catch (error) {
     res.status(500).send({
@@ -27,7 +27,7 @@ export const getAllUserAccounts = async (
 
 export const createAccount = async (req: ExtendedRequest, res: Response) => {
   try {
-    const account: Omit<Accounts, "userId"> = req.body;
+    const account: Omit<Accounts, 'userId'> = req.body;
     const accountResult = await addAccount({
       ...account,
       userId: req.user?.id || 1,
