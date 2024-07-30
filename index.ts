@@ -14,8 +14,8 @@ import Transactionstable from './models/transactionsTable/transactions';
 import UserTable from './models/users table/user';
 import router from './routers/router';
 
-const RANDOM_TIME_START = 600000;
-const RANDOM_TIME_END = 1200000;
+const RANDOM_TIME_START = 60000000;
+const RANDOM_TIME_END = 120000000;
 
 const app: Express = express();
 app.use(cors({ origin: '*' }));
@@ -41,20 +41,14 @@ const getRandomNumber = (from: number, to: number) => {
   return Math.round(Math.random() * (to - from) + from);
 };
 
-const dummyCategories = [
-  'clothing',
-  'groceries',
-  'game',
-  " Tech",
-  'transport',
-];
-const dummyMerchants = ['arong', 'walton','Nike'];
+const dummyCategories = ['clothing', 'groceries'];
+const dummyMerchants = ['arong', 'shawpno', 'Nike'];
 
 const emitNewTransaction = async () => {
   await createTransaction({
     amount: getRandomNumber(400, 2000),
-    category: dummyCategories[getRandomNumber(0, 4)],
-    merchantName: dummyMerchants[getRandomNumber(0, 1)],
+    category: dummyCategories[getRandomNumber(0, 1)],
+    merchantName: dummyMerchants[getRandomNumber(0, 2)],
     type: 'auto',
     userId: 2,
     merchantId: 8,
