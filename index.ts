@@ -14,7 +14,7 @@ import Transactionstable from './models/transactionsTable/transactions';
 import UserTable from './models/users table/user';
 import router from './routers/router';
 
-const RANDOM_TIME_START = 60000000;
+const RANDOM_TIME_START = 6000000;
 const RANDOM_TIME_END = 120000000;
 
 const app: Express = express();
